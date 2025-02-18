@@ -1,13 +1,22 @@
 package com.javaweb.api.admin;
 
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.exception.MyException;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -17,8 +26,17 @@ public class UserAPI {
     private IUserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUsers(@RequestBody UserDTO newUser) {
-        return ResponseEntity.ok(userService.insert(newUser));
+    public ResponseEntity<?> createUsers(@Valid @RequestBody UserDTO newUser, BindingResult bindingResult) {
+        try {
+            if (bindingResult.hasErrors()) {
+                List<String> errors = bindingResult.getFieldErrors().stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errors);
+            }
+            UserDTO userEntity = userService.insert(newUser);
+            return ResponseEntity.ok("Thêm Thành Công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")

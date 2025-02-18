@@ -14,6 +14,9 @@ public class BuildingEntityConverter {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private RentAreaConverter rentAreaConverter;
+
     public BuildingEntity convertToBuildingEntity(BuildingDTO buildingDTO) {
 
         BuildingEntity buildingEntity = modelMapper.map(buildingDTO, BuildingEntity.class);
@@ -23,6 +26,7 @@ public class BuildingEntityConverter {
             String typeCode = String.join(",", typeCodes);
             buildingEntity.setTypeCode(typeCode);
         }
+        buildingEntity.setRentAreas(rentAreaConverter.toRentArea(buildingDTO, buildingEntity));
         return buildingEntity;
     }
 }

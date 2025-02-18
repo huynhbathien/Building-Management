@@ -317,15 +317,23 @@
         data['typeCode'] = typeCode;
         $.ajax({
             type: "POST",
-            url: "${builidngAPI}", // sử dụng biến URL ở đây
+            url: "${builidngAPI}",
             data: JSON.stringify(data),
             contentType: "application/json",
-            dataType: "JSON",
+            dataType: "json",
             success: function (response) {
-                console.log("success");
+                console.log(response);
+                if (response.id) {
+                    alert("Update Success");
+                } else {
+                    alert("Add Success");
+                }
+                window.location.href = '<c:url value="/admin/building-list"/>';
             },
             error: function (response) {
                 console.log(response);
+                alert("Add fail");
+                window.location.href = '<c:url value="/admin/building-edit?message=error"/>';
             }
         });
     });

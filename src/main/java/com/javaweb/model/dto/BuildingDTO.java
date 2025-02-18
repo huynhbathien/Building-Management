@@ -1,18 +1,37 @@
 package com.javaweb.model.dto;
 
+import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Data
 public class BuildingDTO extends AbstractDTO {
     private Long id;
+
+    @NotNull(message = "Thiếu Tên Tòa Nhà")
     private String name;
+
+    @NotNull(message = "Thiếu Tên Đường")
     private String street;
+
+    @NotNull(message = "Thiếu Tên Phường")
     private String ward;
+
+    @NotNull(message = "Thiếu Tên Quận")
     private String district;
+
+    @NotNull(message = "Thiếu Số Tầng Hầm")
     private Long numberOfBasement;
+
+    @NotNull(message = "Thiếu Diện Tích Sàn")
     private Long floorArea;
+
     private String level;
+
+    @NotNull(message = "Thiếu Loại Tòa Nhà")
     private List<String> typeCode;
     private String overtimeFee;
     private String electricityFee;

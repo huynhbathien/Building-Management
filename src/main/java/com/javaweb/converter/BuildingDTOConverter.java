@@ -4,11 +4,14 @@ import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.enums.districtCode;
 import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.utils.DistrictCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,14 +25,12 @@ public class BuildingDTOConverter {
         List<RentAreaEntity> areaEntities = buildingEntity.getRentAreas();
         String rentArea = areaEntities.stream().map(item -> item.getValue().toString()).collect(Collectors.joining(","));
         dto.setRentArea(rentArea);
+
         String district = buildingEntity.getDistrict();
-        if (district != null) {
-            districtCode districtEnum = Stream.of(districtCode.values())
-                    .filter(code -> code.name().equals(district))
-                    .findFirst()
-                    .orElse(null);
-            if (districtEnum != null) {
-                String districtName = districtEnum.getDistrictName();
+        Map<String, String> districtType = DistrictCode.type();
+        if (district != null && district != "") {
+            String districtName = districtType.get(district);
+            if (districtName != null && districtName != "") {
                 dto.setDistrict(districtName);
             }
         }

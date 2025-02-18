@@ -1,10 +1,18 @@
 package com.javaweb.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user")
 public class UserEntity extends BaseEntity {
 
@@ -20,6 +28,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "fullname", nullable = false)
     private String fullName;
 
+    @Size(min = 8, message = "password must be least 8 characters")
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -35,90 +44,14 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-//    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
-//    private List<BuildingEntity> buildingEntityList = new ArrayList<>();
+    @ManyToMany(mappedBy = "userEntities", fetch = FetchType.LAZY)
+    private List<BuildingEntity> buildingEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY)
-    private List<AssignBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+//    @OneToMany(mappedBy = "staff", fetch = FetchType.LAZY)
+//    private List<AssignBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
 //
 //    @OneToMany(mappedBy="users", fetch = FetchType.LAZY)
 //    private List<UserRoleEntity> userRoleEntities = new ArrayList<>();
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
-//    public List<BuildingEntity> getBuildingEntityList() {
-//        return buildingEntityList;
-//    }
-//
-//    public void setBuildingEntityList(List<BuildingEntity> buildingEntityList) {
-//        this.buildingEntityList = buildingEntityList;
-//    }
-
-    public List<AssignBuildingEntity> getAssignmentBuildingEntities() {
-        return assignmentBuildingEntities;
-    }
-
-    public void setAssignmentBuildingEntities(List<AssignBuildingEntity> assignmentBuildingEntities) {
-        this.assignmentBuildingEntities = assignmentBuildingEntities;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public List<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<RoleEntity> roles) {
-        this.roles = roles;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

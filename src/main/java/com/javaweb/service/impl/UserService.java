@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 public class UserService implements IUserService {
 
 
-
     @Autowired
     private UserRepository userRepository;
 
@@ -43,12 +42,13 @@ public class UserService implements IUserService {
     @Override
     public Map<Long, String> getStaffs() {
         Map<Long, String> listStaffs = new HashMap<>();
-        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1,"STAFF");
+        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
         for (UserEntity user : staffs) {
-            listStaffs.put(user.getId(),user.getFullName());
+            listStaffs.put(user.getId(), user.getFullName());
         }
         return listStaffs;
     }
+
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
         return userConverter.convertToDto(userRepository.findOneByUserNameAndStatus(name, status));
@@ -73,7 +73,6 @@ public class UserService implements IUserService {
     }
 
 
-
     @Override
     public List<UserDTO> getAllUsers(Pageable pageable) {
         List<UserEntity> userEntities = userRepository.getAllUsers(pageable);
@@ -90,7 +89,6 @@ public class UserService implements IUserService {
     public int countTotalItems() {
         return userRepository.countTotalItem();
     }
-
 
 
     @Override
@@ -125,6 +123,9 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserDTO insert(UserDTO newUser) {
+        if (userRepository.existsByUserName(newUser.getUserName())) {
+            throw new RuntimeException("username already exists");
+        }
         RoleEntity role = roleRepository.findOneByCode(newUser.getRoleCode());
         UserEntity userEntity = userConverter.convertToEntity(newUser);
         userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));

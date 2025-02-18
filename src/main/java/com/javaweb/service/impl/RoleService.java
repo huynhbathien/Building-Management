@@ -7,39 +7,41 @@ import com.javaweb.repository.RoleRepository;
 import com.javaweb.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @Service
 public class RoleService implements IRoleService {
-	
-	@Autowired
-	private RoleRepository roleRepository;
-	
-	@Autowired
-	private RoleConverter roleConverter;
 
-	public List<RoleDTO> findAll() {
-		List<RoleEntity> roleEntities = roleRepository.findAll();
-		List<RoleDTO> list = new ArrayList<>();
-		roleEntities.forEach(item -> {
-			RoleDTO roleDTO = roleConverter.convertToDto(item);
-			list.add(roleDTO);
-		});
-		return list;
-	}
+    @Autowired
+    private RoleRepository roleRepository;
 
-	@Override
-	public Map<String, String> getRoles() {
-		Map<String,String> roleTerm = new HashMap<>();
-		List<RoleEntity> roleEntity = roleRepository.findAll();
-		for(RoleEntity item : roleEntity){
-			RoleDTO roleDTO = roleConverter.convertToDto(item);
-			roleTerm.put(roleDTO.getCode(), roleDTO.getName());
-		}
-		return roleTerm;
-	}
+    @Autowired
+    private RoleConverter roleConverter;
+
+    public List<RoleDTO> findAll() {
+        List<RoleEntity> roleEntities = roleRepository.findAll();
+        List<RoleDTO> list = new ArrayList<>();
+        roleEntities.forEach(item -> {
+            RoleDTO roleDTO = roleConverter.convertToDto(item);
+            list.add(roleDTO);
+        });
+        return list;
+    }
+
+    @Override
+    public Map<String, String> getRoles() {
+        Map<String, String> roleTerm = new HashMap<>();
+        List<RoleEntity> roleEntity = roleRepository.findAll();
+        for (RoleEntity item : roleEntity) {
+            RoleDTO roleDTO = roleConverter.convertToDto(item);
+            roleTerm.put(roleDTO.getCode(), roleDTO.getName());
+        }
+        return roleTerm;
+    }
 }
