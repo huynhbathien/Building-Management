@@ -27,4 +27,8 @@ Dự án Quản Lý Bất Động Sản là một ứng dụng web cho phép ng�
   
 - **DTO (Data Transfer Object)**: Dùng để chuyển dữ liệu giữa các tầng của ứng dụng và giữa backend và frontend mà không lộ thông tin nội bộ của hệ thống.
 
+![Image](https://github.com/user-attachments/assets/ee99d004-a7bb-450a-8078-e4d27b81f910)
 
+![Image](https://github.com/user-attachments/assets/b7e02981-b3bc-4753-9d88-76bb0538534b)
+
+![Image](https://github.com/user-attachments/assets/f2911664-823c-43f5-b6c7-fed9c7d09d55)
