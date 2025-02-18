@@ -11,6 +11,7 @@ Dự án Quản Lý Bất Động Sản là một ứng dụng web cho phép ng�
 5. **Tìm kiếm theo 16 trường**: Hỗ trợ tìm kiếm và lọc bất động sản theo 16 trường khác nhau (ví dụ: tên tòa nhà, địa chỉ, diện tích, giá thuê, v.v.).
 6. **Sử dụng `Enum`**: Một số trường trong dự án sử dụng `Enum` để quản lý các giá trị có sẵn như loại bất động sản, trạng thái tòa nhà, v.v.
 7. **Sử dụng `Builder Pattern`**: Các đối tượng như `BuildingDTO` được xây dựng bằng `Builder Pattern` để đảm bảo tính mở rộng và dễ bảo trì và một số các kỹ thuật khác.
+8. **Sử dụng `Cascade`**: Được áp dụng trong một số quan hệ giữa các thực thể, ví dụ như khi xóa một `BuildingEntity`, các thực thể liên quan (như `AssignmentBuilding`, `RentArea`) cũng sẽ bị xóa tự động nếu có cấu hình cascade, giúp tiết kiệm thời gian và giảm thiểu mã cần viết.
 
 ## Cấu Trúc Dự Án
 
